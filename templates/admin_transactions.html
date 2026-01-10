@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Transactions</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/securepay/style.css">
+</head>
+<body>
+
+<div class="glass-container split-layout">
+  <a href="{{ url_for('admin_dashboard') }}" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+
+  <div class="left-panel">
+    <i class="fa-solid fa-mobile-screen-button" style="font-size: 60px; margin-bottom: 10px; color:#43e97b;"></i>
+    <i class="fa-solid fa-arrow-right-arrow-left" style="font-size: 30px; margin-bottom: 10px; color:white;"></i>
+    <i class="fa-solid fa-mobile-screen-button" style="font-size: 60px; margin-bottom: 20px; color:#43e97b;"></i>
+    <h2>Transaction Log</h2>
+  </div>
+
+  <div class="right-panel">
+    <h2 class="panel-title">Complete Transaction Details</h2>
+    <p class="panel-subtitle">Click on any transaction row to view the full details.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Date/Time</th>
+          <th>User Mobile</th>
+          <th>Merchant UPI</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if transactions %}
+          {% for tx in transactions %}
+          <tr>
+            <td>
+              <span style="padding:4px 10px; border-radius:999px; font-size:12px; background: {% if tx.prediction == 'fraud' %}rgba(248,113,113,0.2){% else %}rgba(134,239,172,0.2){% endif %}; color:{% if tx.prediction == 'fraud' %}#f87171{% else %}#4ade80{% endif %};">
+                {{ tx.prediction or 'unknown' }}
+              </span>
+            </td>
+            <td>{{ tx.timestamp.strftime('%Y-%m-%d %H:%M:%S') if tx.timestamp else '-' }}</td>
+            <td>{{ tx.sender or '-' }}</td>
+            <td>{{ tx.receiver or '-' }}</td>
+            <td>₹{{ "%.2f"|format(tx.amount or 0) }}</td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="5" class="empty-state">No transactions found.</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

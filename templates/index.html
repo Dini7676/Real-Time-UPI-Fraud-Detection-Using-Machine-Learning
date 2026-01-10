@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UPIGUARD - Secure UPI Payments</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecurePay - UPI Fraud Detection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">SecurePay</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#learn">Learn</a></li>
+    </ul>
+    <div class="auth-buttons">
+      <a href="{{ url_for('login') }}" class="btn-login">Log In</a>
+      <a href="#signup" class="btn-signup">Sign Up</a>
+    </div>
+  </nav>
+  <section class="services-section">
+    <div class="services-bg-layer"></div>
+
+    <div class="content-container">
+      <div class="services-header">
+        <h4>OUR SERVICES</h4>
+        <h2>What We Can Do For You</h2>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card glass-effect">
+          <div class="icon-wrapper">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3>Real-time Fraud Detection</h3>
+          <p>Our AI model analyzes every transaction instantly to identify and block suspicious activity.</p>
+        </div>
+
+        <div class="feature-card glass-effect">
+          <div class="icon-wrapper">
+            <i class="fa-solid fa-user-lock"></i>
+          </div>
+          <h3>Secure User Accounts</h3>
+          <p>Robust authentication and data protection keep your personal and financial information safe.</p>
+        </div>
+
+        <div class="feature-card glass-effect">
+          <div class="icon-wrapper">
+            <i class="fa-solid fa-store"></i>
+          </div>
+          <h3>Reliable Merchant Tools</h3>
+          <p>Easy-to-use merchant dashboards with QR code generation for seamless payment collection.</p>
+        </div>
+
+        <div class="feature-card glass-effect">
+          <div class="icon-wrapper">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <h3>Instant & Safe Payments</h3>
+          <p>Experience the speed of UPI payments with an added layer of intelligent security.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </body>
+</html>

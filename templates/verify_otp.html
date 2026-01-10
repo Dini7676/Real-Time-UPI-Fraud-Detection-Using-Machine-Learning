@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & OTP Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* --- CSS STYLING --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      /* Dark tech background similar to screenshots */
+      background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+      transition: background 0.5s ease;
+    }
+
+    /* The Main Card Container */
+    .container {
+      position: relative;
+      width: 850px;
+      height: 520px;
+      /* Default Glass Style */
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      display: flex;
+      overflow: hidden;
+      transition: all 0.5s ease;
+    }
+
+    /* --- STATE: OTP MODE (Purple Gradient) --- */
+    /* When this class is added via JS, the card turns purple/pink like s14.jpg */
+    .container.otp-mode {
+      background: linear-gradient(135deg, #662d8c 0%, #ed1e79 100%);
+      border: none;
+    }
+
+    /* --- Left Side (Visuals) --- */
+    .left-box {
+      width: 40%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    /* Avatar Circle (Login View) */
+    .avatar-circle {
+      width: 120px;
+      height: 120px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 60px;
+      color: #fff;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .avatar-circle.admin { background: #4a59cd; }
+    .avatar-circle.user { background: #007bff; }
+
+    /* OTP Icon (Hidden by default) */
+    .otp-icon-wrapper {
+      display: none; /* Hidden unless in OTP mode */
+      flex-direction: column;
+      align-items: center;
+      color: #ff9f43; /* Orange color from screenshot */
+    }
+        
+    .otp-icon-wrapper i {
+      font-size: 80px;
+      margin-bottom: 10px;
+    }
+        
+    .otp-text-label {
+      font-size: 24px;
+      font-weight: bold;
+      border: 2px solid #ff9f43;
+      padding: 5px 15px;
+      border-radius: 8px;
+      color: #ff9f43;
+      text-transform: uppercase;
+    }
+
+    /* --- Right Side (Forms) --- */
+    .right-box {
+      width: 60%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      color: white;
+      position: relative;
+    }
+
+    /* Toggle Buttons (Login View) */
+    .toggle-btn-group {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 30px;
+      gap: 10px;
+    }
+
+    .toggle-btn {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: 0.3s;
+    }
+    .toggle-btn.active {
+      background: #007bff;
+      color: white;
+      font-weight: 600;
+    }
+
+    /* Form Common Styles */
+    .form-section {
+      animation: fadeIn 0.5s ease;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255,255,255,0.1);
+      outline: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 14px;
+    }
+
+    .input-group input::placeholder {
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* Buttons */
+    .action-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .btn-user { background-color: #0056b3; color: white; }
+    .btn-user:hover { background-color: #004494; }
+        
+    .btn-admin { background-color: #222; color: white; }
+    .btn-admin:hover { background-color: #000; }
+
+    /* --- OTP View Specifics --- */
+    .otp-description {
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 20px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .otp-info-box {
+      background-color: #d1ecf1; /* Light blue bg */
+      color: #0c5460; /* Dark blue text */
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 13px;
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .otp-input {
+      text-align: center;
+      letter-spacing: 5px;
+      font-size: 18px !important;
+      background: rgba(0,0,0,0.3) !important;
+    }
+
+    .btn-verify {
+      background-color: #198754; /* Green */
+      color: white;
+    }
+    .btn-verify:hover { background-color: #157347; }
+
+    .cancel-link {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .cancel-link:hover { color: white; text-decoration: underline; }
+
+    /* Utilities */
+    .hidden { display: none !important; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="main-container">
+    <div class="left-box">
+      <div class="avatar-circle user" id="avatar-icon">
+        <i class="fa-solid fa-user"></i>
+      </div>
+
+      <div class="otp-icon-wrapper" id="otp-icon">
+        <i class="fa-regular fa-file-lines"></i>
+        <div class="otp-text-label">OTP</div>
+      </div>
+    </div>
+
+    <div class="right-box">
+            
+      <div id="view-login">
+        <div class="toggle-btn-group">
+          <button class="toggle-btn active" id="tab-user" onclick="switchLoginTab('user')">User Login</button>
+          <button class="toggle-btn" id="tab-admin" onclick="switchLoginTab('admin')">Admin Login</button>
+        </div>
+
+        <h2 class="form-header" id="form-title">User Verification</h2>
+
+        <form id="form-user" class="form-section">
+          <div class="input-group">
+            <label>Mobile Number</label>
+            <input id="mobile" type="text" placeholder="9957000001" inputmode="numeric" maxlength="10" pattern="\\d{10}" autocomplete="tel" aria-label="Mobile Number">
+          </div>
+          <button type="button" class="action-btn btn-user" onclick="goToOtpPage()">Send OTP</button>
+        </form>
+
+        <form id="form-admin" class="form-section hidden">
+          <div class="input-group">
+            <label>Username</label>
+            <input type="text" placeholder="admin">
+          </div>
+          <div class="input-group">
+            <label>Password</label>
+            <input type="password" placeholder="Enter password">
+          </div>
+          <button type="button" class="action-btn btn-admin">Login as Admin</button>
+        </form>
+      </div>
+
+      <div id="view-otp" class="hidden form-section">
+        <h2 class="form-header">Email Verification</h2>
+                
+        <p class="otp-description">
+          An OTP has been sent to your registered email.<br>
+          Please enter it below.
+        </p>
+
+        <div class="otp-info-box">
+          OTP sent to your registered email.
+        </div>
+
+        <form method="POST" action="/verify_otp">
+          <div class="input-group">
+            <label style="text-align:center">Enter 6-Digit OTP</label>
+            <input type="text" class="otp-input" name="otp" placeholder="------" maxlength="6" required>
+          </div>
+          <button type="submit" class="action-btn btn-verify">Verify & Login</button>
+        </form>
+                
+        <a class="cancel-link" onclick="cancelOtp()">Cancel</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Elements
+    const container = document.getElementById('main-container');
+    const viewLogin = document.getElementById('view-login');
+    const viewOtp = document.getElementById('view-otp');
+        
+    const avatarIcon = document.getElementById('avatar-icon');
+    const otpIcon = document.getElementById('otp-icon');
+        
+    const tabUser = document.getElementById('tab-user');
+    const tabAdmin = document.getElementById('tab-admin');
+    const formUser = document.getElementById('form-user');
+    const formAdmin = document.getElementById('form-admin');
+    const formTitle = document.getElementById('form-title');
+
+    // 1. Switch between User and Admin tabs
+    function switchLoginTab(type) {
+      if(type === 'user') {
+        tabUser.classList.add('active');
+        tabAdmin.classList.remove('active');
+        formUser.classList.remove('hidden');
+        formAdmin.classList.add('hidden');
+        formTitle.innerText = "User Verification";
+                
+        // Update Avatar
+        avatarIcon.classList.remove('admin');
+        avatarIcon.classList.add('user');
+        avatarIcon.innerHTML = '<i class="fa-solid fa-user"></i>';
+      } else {
+        tabAdmin.classList.add('active');
+        tabUser.classList.remove('active');
+        formAdmin.classList.remove('hidden');
+        formUser.classList.add('hidden');
+        formTitle.innerText = "Admin Portal";
+
+        // Update Avatar
+        avatarIcon.classList.remove('user');
+        avatarIcon.classList.add('admin');
+        avatarIcon.innerHTML = '<i class="fa-solid fa-user-tie"></i>';
+      }
+    }
+
+    // Sanitize mobile input to allow only digits and max 10
+    const mobileInput = document.getElementById('mobile');
+    if (mobileInput) {
+      mobileInput.addEventListener('input', (e) => {
+        const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+        e.target.value = digits;
+      });
+      mobileInput.addEventListener('keypress', (e) => {
+        if (!/[0-9]/.test(e.key)) {
+          e.preventDefault();
+        }
+      });
+      mobileInput.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const paste = (e.clipboardData || window.clipboardData).getData('text');
+        const digits = (paste || '').replace(/\D/g, '').slice(0, 10);
+        document.execCommand('insertText', false, digits);
+      });
+    }
+
+    // 2. Go to OTP Page (Triggered by "Send OTP")
+    function goToOtpPage() {
+      // Validate mobile number: exactly 10 digits
+      if (mobileInput) {
+        const val = (mobileInput.value || '').trim();
+        if (val.length !== 10) {
+          alert('Please enter a valid 10-digit mobile number.');
+          mobileInput.focus();
+          return;
+        }
+      }
+      // Hide Login View
+      viewLogin.classList.add('hidden');
+            
+      // Show OTP View
+      viewOtp.classList.remove('hidden');
+
+      // Change Container Style to Purple Gradient
+      container.classList.add('otp-mode');
+
+      // Swap Left Graphics (Avatar -> OTP Icon)
+      avatarIcon.style.display = 'none';
+      otpIcon.style.display = 'flex';
+    }
+
+    // 3. Cancel OTP (Go back to Login)
+    function cancelOtp() {
+      // Hide OTP View
+      viewOtp.classList.add('hidden');
+            
+      // Show Login View
+      viewLogin.classList.remove('hidden');
+
+      // Revert Container Style
+      container.classList.remove('otp-mode');
+
+      // Swap Left Graphics (OTP Icon -> Avatar)
+      otpIcon.style.display = 'none';
+      avatarIcon.style.display = 'flex';
+    }
+  </script>
+
+</body>
+</html>

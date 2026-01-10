@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/static/css/styles.css"><title>Scan QR</title></head>
+<body class="gradient-bg">
+<div class="glass-card">
+  <h2>Scan QR</h2>
+  <a href="{{ url_for('make_payment') }}" style="display:inline-block; margin-bottom:15px; color:#9ae6b4; text-decoration:none;">&larr; Back to Make Payment</a>
+  <form method="POST" enctype="multipart/form-data" class="fade-in reveal">
+    <input id="qrInput" type="file" name="qr" accept="image/*">
+    <img id="qrPreview" alt="QR Preview" style="max-width:220px;margin-top:10px;display:none;border-radius:12px;"/>
+    <button class="btn neon" type="submit">Upload</button>
+  </form>
+  <div class="scanner"><div class="scan-line"></div></div>
+</div>
+<script type="module">
+import {showToast} from '/static/js/animations.js';
+const input=document.getElementById('qrInput');
+const preview=document.getElementById('qrPreview');
+input.addEventListener('change',()=>{
+  const f=input.files[0];
+  if(!f)return;const url=URL.createObjectURL(f);preview.src=url;preview.style.display='block';
+  showToast('QR image loaded. Parsing...');
+});
+</script>
+</body></html>

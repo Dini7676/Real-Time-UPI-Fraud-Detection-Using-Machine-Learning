@@ -1,0 +1,32 @@
+:root{--grad1:#6C63FF;--grad2:#3F51B5;--grad3:#1A237E;--glass-bg:rgba(255,255,255,0.14);--text:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:'Poppins',sans-serif;color:var(--text)}
+.gradient-bg{min-height:100vh;background:linear-gradient(135deg,var(--grad1),var(--grad2),var(--grad3));display:flex;align-items:center;justify-content:center}
+.glass-card{backdrop-filter:blur(16px);border-radius:18px;padding:28px 32px;background:var(--glass-bg);box-shadow:0 0 12px rgba(255,255,255,0.4);max-width:960px;width:92%}
+.btn{padding:12px 18px;border-radius:12px;border:none;cursor:pointer;text-decoration:none;display:inline-block}
+.neon{background:#6C63FF;color:#fff;box-shadow:0 0 12px rgba(255,255,255,0.4)}.neon:hover{transform:translateY(-1px);box-shadow:0 0 18px rgba(255,255,255,0.6)}
+.hero{text-align:center}.fade-in{animation:fade 0.7s ease forwards;opacity:0}@keyframes fade{to{opacity:1}}
+.floating-icons{display:flex;gap:16px;justify-content:center;margin-top:18px}
+.floating-icons img{width:44px;height:44px;animation:float 3s ease-in-out infinite}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.login input, .login select, .otp input, .otp select, form input, form select{width:100%;padding:12px;margin:8px 0;border-radius:12px;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.12);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{padding:18px;border-radius:16px;background:rgba(255,255,255,0.12);box-shadow:0 0 12px rgba(255,255,255,0.3);text-align:center}
+.scanner{position:relative;height:180px;border-radius:16px;background:rgba(0,0,0,0.2);margin-top:16px;overflow:hidden}
+.scan-line{position:absolute;top:0;left:0;width:100%;height:2px;background:#6C63FF;box-shadow:0 0 12px rgba(108,99,255,0.9);animation:scan 2s linear infinite}@keyframes scan{0%{top:0}50%{top:50%}100%{top:100%}}
+.glow-input{box-shadow:0 0 8px rgba(108,99,255,0.6)}
+.alert{padding:24px;border-radius:16px;text-align:center}.alert.red{background:rgba(255,0,0,0.2)}.alert.green{background:rgba(0,255,0,0.15)}
+.pulse{animation:pulse 1.4s ease-in-out infinite}@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+body.shake{animation:shake 0.6s ease}@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-4px)}40%,60%{transform:translateX(4px)}}
+@media (max-width:640px){.glass-card{padding:20px}}
+
+/* Ripple effect */
+.btn.ripple{position:relative;overflow:hidden}
+.btn.ripple::after{content:"";position:absolute;width:10px;height:10px;background:rgba(255,255,255,0.6);border-radius:50%;transform:scale(0);opacity:0;animation:ripple 0.6s ease-out}
+@keyframes ripple{to{transform:scale(12);opacity:0}}
+
+/* Toast notifications */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.6);color:#fff;padding:12px 18px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.3);z-index:9999;opacity:0;transition:opacity .3s}
+.toast.show{opacity:1}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .4s, transform .4s}
+.reveal.visible{opacity:1;transform:none}

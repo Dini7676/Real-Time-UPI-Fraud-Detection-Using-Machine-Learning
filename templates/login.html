@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        /* --- CSS STYLING --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Background Image similar to your screenshot */
+            background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+        }
+
+        /* The Main Glass Card */
+        .container {
+            position: relative;
+            width: 800px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px); /* This creates the blurry glass effect */
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* --- Left Side (Avatar) --- */
+        .left-box {
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .avatar-circle {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 60px;
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Change color based on type */
+        .avatar-circle.admin { background: #4a59cd; } /* Purple/Blue for Admin */
+        .avatar-circle.user { background: #007bff; }  /* Blue for User */
+
+        /* --- Right Side (Form) --- */
+        .right-box {
+            width: 60%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        /* Toggle Buttons at top */
+        .toggle-btn-group {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .toggle-btn.active {
+            background: #007bff; /* Bright Blue */
+            color: white;
+            font-weight: 600;
+        }
+        
+        /* Form Content */
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.2); /* Dark transparent bg */
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Action Button */
+        .action-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        /* Specific Button Colors */
+        .btn-user {
+            background-color: #0056b3; /* Blue */
+            color: white;
+        }
+        .btn-user:hover { background-color: #004494; }
+
+        .btn-admin {
+            background-color: #222; /* Black/Dark Grey */
+            color: white;
+        }
+        .btn-admin:hover { background-color: #000; }
+
+        /* Utility to hide forms */
+        .hidden { display: none; }
+
+        /* Responsive Mobile */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                width: 90%;
+                height: auto;
+            }
+            .left-box {
+                width: 100%;
+                padding: 20px;
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            .right-box {
+                width: 100%;
+            }
+            .avatar-circle {
+                width: 80px;
+                height: 80px;
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-container split-layout">
+        <div class="left-panel">
+            <div class="avatar-circle user" id="login-avatar">
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </div>
+
+        <div class="right-panel" id="view-login">
+            <div class="tab-group">
+                <button class="tab-btn active" id="tab-user" onclick="switchLoginTab('user')">User Login</button>
+                <button class="tab-btn" id="tab-admin" onclick="switchLoginTab('admin')">Admin Login</button>
+            </div>
+
+            <h2 class="panel-title" id="login-title">User Verification</h2>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div style="background: rgba(0,0,0,0.35); border-radius: 8px; padding: 10px 15px; margin-bottom: 20px; color: #ffb4b4;">
+                {% for message in messages %}
+                <div>{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <!-- User Login Form -->
+            <form id="form-user" method="POST" action="{{ url_for('login') }}">
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="9957000001" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" autocomplete="tel" required>
+                </div>
+                <input type="hidden" name="role" value="user">
+                <button type="submit" class="btn btn-blue">Send OTP</button>
+            </form>
+
+            <!-- Admin Login Form -->
+            <form id="form-admin" class="hidden" method="POST" action="{{ url_for('login') }}">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="admin-username" name="username" class="form-control" placeholder="admin" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="admin-password" name="password" class="form-control" placeholder="admin" required>
+                </div>
+                <button type="submit" class="btn btn-dark">Login as Admin</button>
+                <input type="hidden" name="role" value="admin">
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+    <script>
+        // enforce numeric-only and exactly 10 digits
+        (function(){
+            const mobileInput = document.getElementById('mobile');
+            if (mobileInput) {
+                mobileInput.addEventListener('input', (e) => {
+                    const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                    e.target.value = digits;
+                });
+                mobileInput.addEventListener('keypress', (e) => {
+                    if (!/[0-9]/.test(e.key)) {
+                        e.preventDefault();
+                    }
+                });
+                mobileInput.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const paste = (e.clipboardData || window.clipboardData).getData('text');
+                    const digits = (paste || '').replace(/\D/g, '').slice(0, 10);
+                    document.execCommand('insertText', false, digits);
+                });
+            }
+        })();
+
+        function switchLoginTab(type){
+            const tabUser = document.getElementById('tab-user');
+            const tabAdmin = document.getElementById('tab-admin');
+            const avatar = document.getElementById('login-avatar');
+            const formUser = document.getElementById('form-user');
+            const formAdmin = document.getElementById('form-admin');
+            const title = document.getElementById('login-title');
+            if(type === 'user'){
+                tabUser.classList.add('active');
+                tabAdmin.classList.remove('active');
+                formUser.classList.remove('hidden');
+                formAdmin.classList.add('hidden');
+                avatar.classList.remove('admin');
+                avatar.classList.add('user');
+                avatar.innerHTML = '<i class="fa-solid fa-user"></i>';
+                title.textContent = 'User Verification';
+            }else{
+                tabAdmin.classList.add('active');
+                tabUser.classList.remove('active');
+                formAdmin.classList.remove('hidden');
+                formUser.classList.add('hidden');
+                avatar.classList.remove('user');
+                avatar.classList.add('admin');
+                avatar.innerHTML = '<i class="fa-solid fa-user-tie"></i>';
+                title.textContent = 'Admin Login';
+            }
+        }
+    </script>
+
+</body>
+</html>

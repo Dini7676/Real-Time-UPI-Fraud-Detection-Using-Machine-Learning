@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/static/css/styles.css"><title>Result</title>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
+</head>
+<body class="gradient-bg">
+<div class="glass-card">
+  {% if status == 'fraud' %}
+    <div class="alert pulse red">
+      <h2>Fraud Detected</h2>
+      <p>Your transaction looks risky.</p>
+    </div>
+    <script>document.body.classList.add('shake');</script>
+  {% else %}
+    <div class="alert green">
+      <h2>Safe Transaction</h2>
+      <p>Payment is secure.</p>
+    </div>
+    <script>
+      confetti({particleCount: 120, spread: 80, origin: { y: 0.6 }});
+    </script>
+  {% endif %}
+  {% if amount is not none or receiver %}
+  <div style="margin: 25px 0; color:#d1d5db; font-size:14px;">
+    <div>Amount: <strong>₹{{ amount|default(0.0)|round(2) }}</strong></div>
+    {% if receiver %}<div>Receiver: <strong>{{ receiver }}</strong></div>{% endif %}
+    {% if confidence %}<div>Model Confidence: <strong>{{ confidence }}</strong></div>{% endif %}
+    {% if high_risk %}
+      <div style="margin-top:8px; color:#fca5a5;">High Risk UPI based on history</div>
+    {% endif %}
+  </div>
+  {% endif %}
+  <a class="btn neon" href="{{ url_for('user_transactions') }}">View Transactions</a>
+  <a class="btn neon" style="margin-top:12px; background:rgba(255,255,255,0.1);" href="{{ url_for('user_dashboard') }}">Back to Dashboard</a>
+</div>
+<script src="/static/js/animations.js"></script>
+</body></html>

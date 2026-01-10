@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Merchants</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/securepay/style.css">
+</head>
+<body>
+
+<div class="glass-container split-layout">
+  <a href="{{ url_for('admin_dashboard') }}" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+
+  <div class="left-panel">
+    <i class="fa-solid fa-shop" style="font-size: 80px; margin-bottom: 20px; color:#a18cd1;"></i>
+    <h2>Registered Merchants</h2>
+  </div>
+
+  <div class="right-panel">
+    <h2 class="panel-title">Merchant Account Details</h2>
+    <p class="panel-subtitle">Click on any merchant row to view their full details.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Merchant Name</th>
+          <th>Registered Mobile</th>
+          <th>UPI Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="3" class="empty-state">No registered merchants found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

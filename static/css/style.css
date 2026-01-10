@@ -1,0 +1,626 @@
+/* --- Global Styles --- */
+:root {
+    --primary-blue: #007bff;
+    --primary-dark: #222;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-white: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.7);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+    background-attachment: fixed; /* Keeps bg still while scrolling */
+    color: var(--text-white);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Common Glass Components --- */
+.glass-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* --- Layout: Split Screen (Used in Login & Inner Pages) --- */
+.split-layout {
+    width: 900px;
+    height: 550px;
+    display: flex;
+}
+
+.left-panel {
+    width: 35%;
+    border-right: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.right-panel {
+    width: 65%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-y: auto; /* Scroll if content is long */
+}
+
+/* --- Icons & Avatars --- */
+.avatar-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    margin-bottom: 20px;
+    background: rgba(255,255,255,0.2);
+}
+.avatar-circle.user { background: var(--primary-blue); }
+.avatar-circle.admin { background: #4a59cd; }
+
+.panel-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* --- Forms --- */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 5px;
+    color: white;
+    outline: none;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+/* --- Buttons --- */
+.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.3s;
+    color: white;
+}
+.btn-blue { background-color: var(--primary-blue); }
+.btn-blue:hover { background-color: #0056b3; }
+.btn-dark { background-color: var(--primary-dark); }
+.btn-dark:hover { background-color: black; }
+.btn-green { background-color: #28a745; }
+
+/* --- NEW PAYMENT PAGE STYLES (Sleek Dark Mode) --- */
+.payment-body {
+    background: #0f172a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.payment-card-sleek {
+    width: 450px;
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 40px;
+    color: white;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.sleek-header { display: flex; align-items: center; margin-bottom: 40px; }
+.sleek-back-btn { color: #94a3b8; font-size: 20px; margin-right: 20px; cursor: pointer; transition: 0.2s; text-decoration: none; }
+.sleek-back-btn:hover { color: white; }
+
+.input-group-sleek { margin-bottom: 25px; }
+.label-sleek { display: block; color: #94a3b8; font-size: 13px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+.input-sleek { width: 100%; padding: 15px; background: #334155; border: 2px solid transparent; border-radius: 10px; color: white; font-size: 16px; outline: none; transition: 0.3s; }
+.input-sleek:focus { border-color: #4facfe; background: #475569; }
+.input-sleek::placeholder { color: #64748b; }
+.amount-input { font-size: 28px; font-weight: bold; color: #4facfe; }
+
+/* --- VIBRANT PAYMENT PAGE STYLES (Based on s20.png) --- */
+body.vibrant-bg {
+    background: linear-gradient(135deg, #DA4453 0%, #89216B 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.glass-card-payment {
+    width: 450px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.input-glass {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    outline: none;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+.input-glass::placeholder { color: rgba(255,255,255,0.7); }
+.input-glass:focus { background: rgba(255, 255, 255, 0.25); border-color: white; }
+
+.label-glass { display: block; text-align: left; font-size: 13px; margin-bottom: 5px; color: rgba(255,255,255,0.9); }
+
+.btn-scan { width: 100%; padding: 15px; background: rgba(255,255,255,0.1); border: 2px dashed rgba(255,255,255,0.5); color: white; border-radius: 10px; cursor: pointer; margin-bottom: 20px; transition: 0.3s; }
+.btn-scan:hover { background: rgba(255,255,255,0.2); }
+
+.btn-green { width: 100%; padding: 12px; background-color: #28a745; border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; margin-bottom: 10px; }
+.btn-green:hover { background-color: #218838; }
+
+.btn-grey { width: 100%; padding: 12px; background-color: #6c757d; border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; }
+.btn-grey:hover { background-color: #5a6268; }
+
+.result-icon-circle { width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 40px; margin: 0 auto 20px auto; }
+.success-bg { background-color: #28a745; color: white; }
+.fraud-bg { background-color: #dc3545; color: white; }
+.status-badge { display: inline-block; padding: 5px 15px; font-weight: bold; color: white; font-size: 20px; }
+.bg-blue { background-color: #0056b3; }
+.bg-red { background-color: #0056b3; }
+
+/* Tabs */
+.tab-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+.tab-btn.active {
+    background: var(--primary-blue);
+    color: white;
+}
+
+/* --- Tables (For View Pages) --- */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.data-table th {
+    background: rgba(0,0,0,0.5);
+    padding: 10px;
+    text-align: left;
+    color: #fff;
+}
+
+.data-table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--glass-border);
+    color: var(--text-muted);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-style: italic;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+/* --- Utility --- */
+.hidden { display: none; }
+.back-link {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    text-decoration: none;
+    background: rgba(0,0,0,0.4);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.back-link:hover { background: rgba(0,0,0,0.6); }
+
+/* --- Specific: Admin Dashboard Grid --- */
+.dashboard-container {
+    width: 1000px;
+    padding: 40px;
+    text-align: center;
+}
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.grid-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+.card {
+    background: rgba(255,255,255,0.05);
+    padding: 30px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid transparent;
+}
+.card:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-5px);
+    border-color: rgba(255,255,255,0.3);
+}
+.card i {
+    font-size: 40px;
+    margin-bottom: 15px;
+    color: var(--primary-blue);
+}
+.card h3 { font-size: 16px; margin-bottom: 5px; }
+.card p { font-size: 12px; color: var(--text-muted); }
+
+/* (Rolled back: removed landing page-specific styles appended) */
+
+/* --- NEW GLASS PAYMENT STYLES --- */
+
+/* Ensure the background is vibrant so the glass looks good */
+body.payment-mode {
+    background: linear-gradient(135deg, #1c093c 0%, #360f6e 100%), url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070');
+    background-blend-mode: overlay;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.glass-payment-card {
+    width: 480px;
+    /* Glassmorphism effect */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    border-radius: 24px;
+    padding: 35px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.glass-back-btn {
+    color: rgba(255,255,255,0.7);
+    font-size: 20px;
+    margin-right: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.glass-back-btn:hover { color: white; }
+
+/* The Scan Button Area */
+.scan-container {
+    background: rgba(255,255,255,0.05);
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 25px;
+}
+.scan-container:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.6);
+}
+.scan-icon-large {
+    font-size: 40px;
+    color: #4facfe;
+    margin-bottom: 10px;
+}
+
+/* Separator */
+.or-separator {
+    text-align: center;
+    position: relative;
+    margin: 20px 0;
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+}
+.or-separator::before, .or-separator::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+}
+.or-separator::before { left: 0; }
+.or-separator::after { right: 0; }
+
+/* Inputs for Glass */
+.input-glass-group { margin-bottom: 20px; }
+.label-glass {
+    display: block;
+    color: rgba(255,255,255,0.8);
+    font-size: 13px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+.input-glass {
+    width: 100%;
+    padding: 15px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+.input-glass:focus {
+    border-color: #4facfe;
+    background: rgba(0,0,0,0.3);
+}
+
+/* Main Pay Button */
+.btn-glass-pay {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+    transition: 0.3s;
+}
+.btn-glass-pay:hover { transform: translateY(-2px); }
+
+/* --- RESULT VIEWS (Success/Fraud) --- */
+.result-view {
+    text-align: center;
+    padding: 20px 0;
+    animation: fadeIn 0.5s ease;
+}
+.icon-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    margin: 0 auto 25px auto;
+}
+.success-theme { background: rgba(40, 167, 69, 0.2); color: #28a745; }
+.fraud-theme { background: rgba(220, 53, 69, 0.2); color: #dc3545; }
+
+.result-title { font-size: 24px; font-weight: bold; margin-bottom: 10px; }
+.result-desc { color: rgba(255,255,255,0.7); margin-bottom: 30px; line-height: 1.5; }
+
+.btn-glass-secondary {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-glass-secondary:hover { background: rgba(255,255,255,0.2); }
+
+/* Utility */
+.hidden { display: none; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- Services Section Styles (Homepage) --- */
+/* Additional variables used by services page */
+:root {
+    --secondary-purple: #8E2DE2;
+    --text-gray: #d1d5db;
+    --accent-pink: #ff4b8b;
+}
+
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    box-sizing: border-box;
+}
+.logo {
+    color: var(--text-white);
+    font-size: 24px;
+    font-weight: 700;
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+.nav-links li a {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.nav-links li a:hover { color: var(--text-white); }
+.auth-buttons { display: flex; gap: 15px; }
+.btn-login {
+    color: var(--text-white);
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    transition: all 0.3s;
+}
+.btn-login:hover { background: rgba(255,255,255,0.1); }
+.btn-signup {
+    color: var(--text-white);
+    text-decoration: none;
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #ff416c, #ff4b2b);
+    border-radius: 20px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 75, 43, 0.4);
+    transition: transform 0.3s;
+}
+.btn-signup:hover { transform: translateY(-2px); }
+
+/* Services Section */
+.services-section {
+    position: relative;
+    padding: 120px 20px 80px;
+    min-height: 100vh;
+    overflow: hidden;
+}
+.services-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/image%20upi.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+.services-bg-layer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.92) 0%, rgba(74, 0, 224, 0.85) 100%);
+}
+.content-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    z-index: 1;
+}
+.services-header {
+    text-align: center;
+    margin-bottom: 60px;
+    color: var(--text-white);
+}
+.services-header h4 {
+    color: #00d2ff;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+.services-header h2 { font-size: 36px; margin: 0; }
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+.feature-card.glass-effect {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    color: var(--text-white);
+    transition: all 0.4s ease;
+}
+.feature-card.glass-effect:hover {
+    transform: translateY(-10px);
+    background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+.icon-wrapper { font-size: 40px; margin-bottom: 20px; color: #00d2ff; }
+.feature-card h3 { margin-bottom: 15px; font-size: 18px; }
+.feature-card p { color: var(--text-gray); font-size: 14px; line-height: 1.6; }
+
+@media (max-width: 768px) {
+    .navbar { flex-direction: column; gap: 15px; }
+    .nav-links { gap: 15px; font-size: 14px; }
+    .services-header h2 { font-size: 28px; }
+}

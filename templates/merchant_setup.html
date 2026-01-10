@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Become a Merchant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .merchant-container { width: 800px; height: 450px; display: flex; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); margin: 40px auto; }
+    .merchant-left { width: 40%; background-color: #0f172a; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; color: white; }
+    .merchant-right { width: 60%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+    .input-transparent { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 5px; padding: 10px; width: 100%; color: white; margin-top: 5px; margin-bottom: 20px; }
+    .input-transparent::placeholder { color: rgba(255,255,255,0.6); }
+    .btn-white { background: white; color: #764ba2; font-weight: bold; border: none; padding: 12px; border-radius: 5px; cursor: pointer; margin-bottom: 10px; width: 100%; }
+    label { color:white; font-size:14px; }
+  </style>
+</head>
+<body>
+  <div class="merchant-container">
+    <div class="merchant-left">
+      <i class="fa-solid fa-user-tie" style="font-size: 100px; margin-bottom: 20px; color: #fbbf24;"></i>
+      <h2>Become a Merchant</h2>
+      <p style="font-size: 12px; color: #aaa; margin-top: 10px;">Grow your business with SecurePay.</p>
+    </div>
+
+    <div class="merchant-right">
+      <h2 style="color:white; margin-bottom: 5px;">Setup Your Account</h2>
+      <p style="color:rgba(255,255,255,0.7); font-size:12px; margin-bottom: 25px;">Complete your profile to start receiving payments.</p>
+
+      <form method="POST" action="{{ url_for('merchant_setup') }}">
+        <label>Create a Unique UPI Number</label>
+        <input type="text" id="m-upi" name="upi" class="input-transparent" placeholder="e.g. 9957000001@securepay" required pattern="^[0-9]{10}@[A-Za-z0-9._-]+$" title="Exactly 10 digits followed by @provider (e.g., 9957000001@securepay)">
+        <small style="color: rgba(255,255,255,0.8); display:block; margin-top:-12px; margin-bottom:12px;">Exactly 10 digits followed by @provider. Only digits allowed before '@'.</small>
+
+        <label>Seller Category</label>
+        <select id="m-category" name="category" class="input-transparent" required>
+          <option value="Entertainment" style="color:black">Entertainment</option>
+          <option value="Food & Beverage" style="color:black">Food & Beverage</option>
+          <option value="Retail" style="color:black">Retail</option>
+          <option value="Electronics" style="color:black">Electronics</option>
+          <option value="Tea" style="color:black">Tea</option>
+          <option value="Retail Shop" style="color:black">Retail Shop</option>
+          <option value="Grocery" style="color:black">Grocery</option>
+          <option value="Clothing" style="color:black">Clothing</option>
+          <option value="Health & Wellness" style="color:black">Health & Wellness</option>
+          <option value="Other" style="color:black">Other</option>
+        </select>
+
+        <button type="submit" class="btn-white">Complete Setup</button>
+      </form>
+      <a href="{{ url_for('user_dashboard') }}" style="color:white; text-align:center; display:block; font-size:14px; margin-top:10px;">Cancel</a>
+    </div>
+  </div>
+</body>
+
+</html>

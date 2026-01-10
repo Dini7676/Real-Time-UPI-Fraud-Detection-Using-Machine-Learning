@@ -1,0 +1,31 @@
+LogReg
+              precision    recall  f1-score   support
+
+           0       0.91      0.91      0.91       183
+           1       0.06      0.06      0.06        17
+
+    accuracy                           0.83       200
+   macro avg       0.48      0.48      0.48       200
+weighted avg       0.84      0.83      0.84       200
+
+
+KNN
+              precision    recall  f1-score   support
+
+           0       0.92      1.00      0.96       183
+           1       0.00      0.00      0.00        17
+
+    accuracy                           0.92       200
+   macro avg       0.46      0.50      0.48       200
+weighted avg       0.84      0.92      0.87       200
+
+
+RandomForest
+              precision    recall  f1-score   support
+
+           0       0.92      1.00      0.96       183
+           1       0.00      0.00      0.00        17
+
+    accuracy                           0.92       200
+   macro avg       0.46      0.50      0.48       200
+weighted avg       0.84      0.92      0.87       200

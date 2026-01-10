@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .user-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding: 20px 0; }
+    .header-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 60px; }
+    .btn-outline { background: transparent; border: 1px solid white; color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-left: 10px; transition: 0.3s; }
+    .btn-outline:hover { background: rgba(255,255,255,0.2); }
+    .dash-card { display:block; text-align:center; padding:25px; border-radius:16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color:white; text-decoration:none; }
+    .dash-card h3 { margin-top: 8px; }
+    .avatar-circle { display:flex; align-items:center; justify-content:center; border-radius:50%; color:white; }
+  </style>
+</head>
+<body>
+
+<div class="glass-container" style="width: 1100px; padding: 40px; min-height: 600px;">
+  <div class="header-bar">
+    <h3 style="font-size: 20px;">Welcome, {{ user.name or 'User' }}</h3>
+    <div>
+      <a href="{{ url_for('merchant_setup') }}" class="btn-outline">Become a Merchant</a>
+      <a href="{{ url_for('logout') }}" class="btn-outline">Logout</a>
+    </div>
+  </div>
+
+  <h1 style="text-align:center; margin-bottom: 50px;">User Dashboard</h1>
+
+  <div class="user-grid">
+    <a href="{{ url_for('user_profile') }}" class="dash-card">
+      <div class="avatar-circle" style="background:#ff6b6b; margin: 0 auto 20px auto; width: 80px; height: 80px; font-size: 35px;">
+        <i class="fa-solid fa-user"></i>
+      </div>
+      <h3>Your Profile</h3>
+      <p style="font-size:13px; color:#ccc; margin-top:10px;">View and manage your account details.</p>
+    </a>
+
+    <a href="{{ url_for('make_payment') }}" class="dash-card">
+      <div class="avatar-circle" style="background:#4ecdc4; margin: 0 auto 20px auto; width: 80px; height: 80px; font-size: 35px;">
+        <i class="fa-solid fa-qrcode"></i>
+      </div>
+      <h3>Make a Payment</h3>
+      <p style="font-size:13px; color:#ccc; margin-top:10px;">Initiate new UPI transactions securely.</p>
+    </a>
+
+    <a href="{{ url_for('user_transactions') }}" class="dash-card">
+      <div class="avatar-circle" style="background:#4facfe; margin: 0 auto 20px auto; width: 80px; height: 80px; font-size: 35px;">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+      </div>
+      <h3>Your Transactions</h3>
+      <p style="font-size:13px; color:#ccc; margin-top:10px;">Review the payments you initiated.</p>
+    </a>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+Threshold: 0.5
+Accuracy: 0.9150
+Precision: 0.0000  Recall: 0.0000  F1: 0.0000
+
+Confusion Matrix (rows=true [0,1], cols=pred [0,1]):
+[[183   0]
+ [ 17   0]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.92      1.00      0.96       183
+           1       0.00      0.00      0.00        17
+
+    accuracy                           0.92       200
+   macro avg       0.46      0.50      0.48       200
+weighted avg       0.84      0.92      0.87       200

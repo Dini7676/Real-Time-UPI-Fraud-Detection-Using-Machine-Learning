@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SecurePay Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/securepay/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>body{align-items:flex-start;padding:40px}</style>
+    </head>
+<body>
+<div class="glass-container" style="width: 1100px; padding: 40px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3>SecurePay Admin</h3>
+                <a href="{{ url_for('logout') }}" style="background:transparent; border:1px solid white; color:white; padding:5px 15px; border-radius:5px; cursor:pointer;">Logout</a>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="background: rgba(0,0,0,0.35); border-radius: 8px; padding: 10px 15px; margin-bottom: 20px; color: #4ef7a2;">
+                {% for message in messages %}
+                    <div>{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+    <h1 style="text-align:center; margin-bottom:50px;">Administrator Control Panel</h1>
+
+    <div class="dashboard-grid">
+        <a href="{{ url_for('admin_create_account') }}" class="dash-card">
+            <i class="fa-solid fa-user-plus" style="font-size:40px; color:#4facfe; margin-bottom:15px;"></i>
+            <h3>Create Account</h3>
+            <p style="font-size:12px; color:#ccc; margin-top:5px;">Onboard a new user or merchant.</p>
+        </a>
+
+        <a href="{{ url_for('admin_users') }}" class="dash-card">
+            <i class="fa-solid fa-users" style="font-size:40px; color:#ff9a9e; margin-bottom:15px;"></i>
+            <h3>View Users</h3>
+            <p style="font-size:12px; color:#ccc; margin-top:5px;">See all registered bank accounts.</p>
+        </a>
+
+        <a href="{{ url_for('admin_merchants') }}" class="dash-card">
+            <i class="fa-solid fa-store" style="font-size:40px; color:#a18cd1; margin-bottom:15px;"></i>
+            <h3>View Merchants</h3>
+            <p style="font-size:12px; color:#ccc; margin-top:5px;">See all registered merchants.</p>
+        </a>
+
+        <a href="{{ url_for('admin_transactions') }}" class="dash-card">
+            <i class="fa-solid fa-money-bill-transfer" style="font-size:40px; color:#43e97b; margin-bottom:15px;"></i>
+            <h3>View Transactions</h3>
+            <p style="font-size:12px; color:#ccc; margin-top:5px;">Audit the complete transaction log.</p>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

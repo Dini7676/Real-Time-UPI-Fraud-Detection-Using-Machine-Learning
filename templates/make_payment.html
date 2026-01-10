@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <title>Make Payment - SecurePay</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            /* lightweight toast styles to support showNotification */
+            #notification-area { position: fixed; top: 15px; right: 15px; z-index: 9999; }
+            .toast { padding: 10px 14px; margin-bottom: 10px; border-radius: 8px; color: #fff; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2); transition: opacity .5s; }
+            .toast.success { background: rgba(40,167,69,0.2); }
+            .toast.info { background: rgba(0,123,255,0.2); }
+            .toast.warning { background: rgba(255,193,7,0.2); color: #fff; }
+            .toast.error { background: rgba(220,53,69,0.2); }
+        </style>
+        {% set default_location = user.state or 'Bangalore' %}
+ </head>
+<body class="payment-mode">
+    <div id="notification-area"></div>
+
+    <div class="glass-payment-card">
+        <div id="view-initial">
+            <div class="glass-header">
+                <a href="{{ url_for('user_dashboard') }}" class="glass-back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+                <h2 style="font-weight: 500;">Make a Payment</h2>
+            </div>
+
+            <input type="file" id="qr-file-input" accept="image/*" style="display: none;" onchange="simulateQRScan()">
+
+            <div class="scan-container" onclick="triggerQRInput()">
+                <i class="fa-solid fa-qrcode scan-icon-large"></i>
+                <h3 style="font-size: 18px; margin-bottom: 5px;">Scan QR Code</h3>
+                <p style="color: rgba(255,255,255,0.6); font-size: 13px;">Click to upload a QR image to pay instantly.</p>
+            </div>
+
+            <div class="or-separator">OR enter details manually</div>
+
+            <form method="POST" action="{{ url_for('make_payment') }}" onsubmit="event.preventDefault(); validateAndPay();">
+                <div class="input-glass-group">
+                    <label class="label-glass">Recipient Name</label>
+                    <input type="text" id="pay-name" class="input-glass" placeholder="e.g. Merchant Name">
+                </div>
+
+                <div class="input-glass-group">
+                    <label class="label-glass">UPI ID / Account Number</label>
+                    <!-- name matches backend expected field -->
+                    <input type="text" id="pay-upi" name="receiver" class="input-glass" placeholder="e.g. merchant@upi">
+                </div>
+
+                <div class="input-glass-group">
+                    <label class="label-glass">Amount (₹)</label>
+                    <!-- name matches backend expected field -->
+                    <input type="number" id="pay-amount" name="amount" class="input-glass" style="font-size: 20px; font-weight: bold; color: #4facfe;" placeholder="0.00" min="0" step="0.01">
+                </div>
+
+                <div class="input-glass-group">
+                    <label class="label-glass">Location</label>
+                    <input type="text" id="pay-location" name="location" class="input-glass" placeholder="{{ default_location }}" value="{{ default_location }}">
+                </div>
+
+                <button class="btn-glass-pay">Secure Pay <i class="fa-solid fa-shield-alt" style="margin-left: 8px;"></i></button>
+            </form>
+        </div>
+
+        <div id="view-success" class="result-view hidden">
+            <div class="icon-circle success-theme">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h2 class="result-title" style="color:#28a745">Payment Successful!</h2>
+            <p class="result-desc">
+                <span id="success-details">Paid ₹500 to Merchant Name.</span><br>
+                Transaction ID: <span style="font-family:monospace;">TXN99887766</span>
+            </p>
+            <button class="btn-glass-secondary" onclick="window.location.href='{{ url_for('user_dashboard') }}'">Back to Dashboard</button>
+        </div>
+
+        <div id="view-fraud" class="result-view hidden">
+            <div class="icon-circle fraud-theme">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h2 class="result-title" style="color:#dc3545">Transaction Blocked</h2>
+            <p class="result-desc" id="fraud-reason">
+                Our security system detected suspicious activity for this transaction.
+            </p>
+            <button class="btn-glass-secondary" onclick="resetPaymentView()">Try Again</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

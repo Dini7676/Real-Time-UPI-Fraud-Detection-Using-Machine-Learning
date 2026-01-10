@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SecurePay - Login</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="glass-card split">
+    <div class="left center">
+      <div id="avatar" class="icon-circle icon-user">
+        <i class="fa-solid fa-user"></i>
+      </div>
+    </div>
+    <div class="right">
+      <div class="tabs">
+        <button id="tab-user" class="tab active" type="button">User Login</button>
+        <button id="tab-admin" class="tab" type="button">Admin Login</button>
+      </div>
+
+      <form id="form-user" class="form" onsubmit="return false;">
+        <label class="label">Mobile Number</label>
+        <input class="input" type="tel" placeholder="9957000001" maxlength="10" inputmode="numeric" />
+        <button class="btn primary mt-3" type="button">Send OTP</button>
+      </form>
+
+      <form id="form-admin" class="form hidden" onsubmit="return false;">
+        <label class="label">Username</label>
+        <input id="admin-username" class="input" placeholder="admin" />
+        <label class="label mt-2">Password</label>
+        <input id="admin-password" type="password" class="input" placeholder="admin" />
+        <div id="admin-error" class="label" style="display:none;color:#ffb4b4"></div>
+        <button id="admin-login-btn" class="btn primary mt-3" type="button">Login</button>
+      </form>
+
+    </div>
+  </div>
+  <script src="./script.js"></script>
+</body>
+</html>

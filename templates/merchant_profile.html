@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Merchant Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- 1. Background Blur Fix --- */
+        body {
+            background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px) brightness(0.4);
+            -webkit-backdrop-filter: blur(8px) brightness(0.4);
+        }
+
+        /* --- 2. The Vibrant Gradient Modal --- */
+        .profile-modal {
+            width: 850px;
+            background: linear-gradient(135deg, #662D8C 0%, #ED1E79 100%);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            display: flex;
+            position: relative;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .close-icon {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: rgba(255,255,255,0.7);
+            font-size: 24px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .close-icon:hover { color: white; transform: rotate(90deg); }
+
+        .details-col { flex: 1; padding-right: 30px; }
+
+        .modal-header {
+            font-size: 22px;
+            margin-bottom: 30px;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 15px;
+        }
+        .info-label { font-weight: 600; color: rgba(255,255,255,0.9); }
+        .info-val { font-weight: 400; text-align: right; }
+
+        .upi-highlight {
+            background: rgba(0,0,0,0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        .qr-col {
+            width: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-left: 1px solid rgba(255,255,255,0.2);
+            padding-left: 40px;
+        }
+
+        .qr-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-share {
+            background: white;
+            color: #9b28b5;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .btn-share:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+    </style>
+</head>
+<body>
+
+    <div class="profile-modal">
+        <a href="{{ url_for('merchant_dashboard') }}" class="close-icon">&times;</a>
+        
+        <div class="details-col">
+            <div class="modal-header">Your Merchant Profile</div>
+
+            <div class="info-row">
+                <span class="info-label">Full Name:</span>
+                <span class="info-val">{{ user.name or '-' }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Mobile Number:</span>
+                <span class="info-val">{{ user.mobile or '-' }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Email:</span>
+                <span class="info-val">{{ user.email or '-' }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Merchant UPI Number:</span>
+                <span class="info-val upi-highlight">{{ merchant.qr_code or '-' }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Merchant Category:</span>
+                <span class="info-val">{{ merchant.category or '-' }}</span>
+            </div>
+            <div class="info-row" style="border:none;">
+                <span class="info-label">Merchant Since:</span>
+                <span class="info-val">{{ merchant.created_display if merchant.created_display else 'Not tracked' }}</span>
+            </div>
+        </div>
+
+        <div class="qr-col">
+            <div class="qr-box">
+                <img id="qr-image" src="{{ url_for('generate_qr', merchant_id=merchant.merchant_id) }}" width="160" height="160" alt="QR Code">
+            </div>
+            <p style="color:rgba(255,255,255,0.8); font-size:13px; margin-bottom:5px;">Scan to Pay</p>
+            
+            <button class="btn-share" onclick="shareQRCode()">Share QR Code</button>
+        </div>
+
+    </div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

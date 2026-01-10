@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Transactions</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    .tx-container { width: 1000px; margin: 40px auto; padding: 40px; background: rgba(13, 21, 39, 0.95); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); color: white; }
+    table { width: 100%; border-collapse: collapse; margin-top: 30px; }
+    th, td { padding: 14px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    th { color: #63b3ed; font-weight: 600; }
+    tbody tr:hover { background: rgba(255,255,255,0.05); }
+  </style>
+</head>
+<body>
+  <div class="tx-container">
+    <a href="{{ url_for('user_dashboard') }}" class="btn-outline" style="border-color:white; color:white; padding:6px 14px; border-radius:6px; text-decoration:none;">&larr; Back to Dashboard</a>
+    <h1 style="margin-top:20px;">Your Payment History</h1>
+    <p style="color:#cbd5f5;">Transactions initiated from {{ user.mobile or 'your account' }}.</p>
+
+    {% if transactions %}
+    <table>
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Receiver</th>
+          <th>Amount (INR)</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for tx in transactions %}
+        <tr>
+          <td>{{ tx.timestamp.strftime('%Y-%m-%d %H:%M:%S') if tx.timestamp else '-' }}</td>
+          <td>{{ tx.receiver or '-' }}</td>
+          <td>{{ "%.2f"|format(tx.amount or 0) }}</td>
+          <td>{{ tx.prediction or 'unknown' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p style="margin-top:40px; color:#f6ad55;">No transactions recorded yet. Try completing a payment.</p>
+    {% endif %}
+  </div>
+</body>
+</html>
