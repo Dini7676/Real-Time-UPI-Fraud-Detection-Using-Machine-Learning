@@ -49,6 +49,8 @@ With the rapid growth of digital payments, fraud detection has become a critical
 ### 🗄️ Database
 
 * SQLite
+
+
 🌐 Frontend
 
 * HTML5
